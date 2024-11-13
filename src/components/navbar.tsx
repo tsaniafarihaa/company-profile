@@ -1,12 +1,13 @@
-"use client"
+"use client";
 import { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
+import Link from 'next/link';
 
 export default function Navbar() {
     const [isDropdownOpen, setDropdownOpen] = useState(false);
 
     return (
-        <div className="navbar bg-black  opacity-60 fixed top-0 left-0 w-full z-50 p-4">
+        <div className="navbar bg-black opacity-60 fixed top-0 left-0 w-full z-50 p-4">
             {/* Mobile Layout */}
             <div className="navbar-start lg:hidden">
                 <div className="dropdown">
@@ -26,17 +27,17 @@ export default function Navbar() {
                             onBlur={() => setDropdownOpen(false)}
                         >
                             <li>
-                                <a className="text-black hover:text-[#2FA4F9] cursor-pointer">Company</a>
-                                <ul className="p-2">
-                                    <li><a className="text-black hover:text-[#2FA4F9]">About</a></li>
-                                    <li><a className="text-black hover:text-[#2FA4F9]">Meet the Team</a></li>
-                                    <li><a className="text-black hover:text-[#2FA4F9]">Careers</a></li>
-                                </ul>
+                                <Link href="/" className="text-black hover:text-[#2FA4F9] cursor-pointer">Home</Link>
                             </li>
-                            <li><a className="text-black hover:text-[#2FA4F9]">Portfolio</a></li>
-                            <li><a className="text-black hover:text-[#2FA4F9]">Service</a></li>
-                            <li><a className="text-black hover:text-[#2FA4F9]">Client</a></li>
-                            <li><a className="text-black hover:text-[#2FA4F9]">Contact</a></li>
+                            <li>
+                                <Link href="/about" className="text-black hover:text-[#2FA4F9] cursor-pointer">About</Link>
+                            </li>
+                            <li>
+                                <Link href="/portfolio" className="text-black hover:text-[#2FA4F9] cursor-pointer">Service</Link>
+                            </li>
+                            <li>
+                                <Link href="/team" className="text-black hover:text-[#2FA4F9] cursor-pointer">Team</Link>
+                            </li>
                         </ul>
                     )}
                 </div>
@@ -54,21 +55,25 @@ export default function Navbar() {
             <div className="navbar-end hidden lg:flex lg:justify-end lg:pr-10">
                 <ul className="menu menu-horizontal space-x-6">
                     <li>
-                        <details>
-                            <summary className="text-white font-semibold text-lg hover:text-[#2FA4F9] cursor-pointer">
-                                Company
-                            </summary>
-                            <ul className="p-2 bg-white shadow-md rounded-md">
-                                <li><a className="text-black font-medium hover:text-[#2FA4F9]">About</a></li>
-                                <li><a className="text-black font-medium hover:text-[#2FA4F9]">Meet the Team</a></li>
-                                <li><a className="text-black font-medium hover:text-[#2FA4F9]">Careers</a></li>
-                            </ul>
-                        </details>
+                        <Link href="/" className="text-white font-semibold text-lg hover:text-[#2FA4F9]">
+                            Home
+                        </Link>
                     </li>
-                    <li><a className="text-white font-semibold text-lg hover:text-[#2FA4F9]">Portfolio</a></li>
-                    <li><a className="text-white font-semibold text-lg hover:text-[#2FA4F9]">Service</a></li>
-                    <li><a className="text-white font-semibold text-lg hover:text-[#2FA4F9]">Client</a></li>
-                    <li><a className="text-white font-semibold text-lg hover:text-[#2FA4F9]">Contact</a></li>
+                    <li>
+                        <Link href="/about" className="text-white font-semibold text-lg hover:text-[#2FA4F9]">
+                            About
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/portfolio" className="text-white font-semibold text-lg hover:text-[#2FA4F9]">
+                            Service
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/team" className="text-white font-semibold text-lg hover:text-[#2FA4F9]">
+                            Team
+                        </Link>
+                    </li>
                 </ul>
             </div>
         </div>
