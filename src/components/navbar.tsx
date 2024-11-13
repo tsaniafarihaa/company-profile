@@ -6,7 +6,7 @@ export default function Navbar() {
     const [isDropdownOpen, setDropdownOpen] = useState(false);
 
     return (
-        <div className="navbar bg-black p-4 opacity-60 fixed top-0 left-0 w-full z-50 p-4">
+        <div className="navbar bg-black  opacity-60 fixed top-0 left-0 w-full z-50 p-4">
             {/* Mobile Layout */}
             <div className="navbar-start lg:hidden">
                 <div className="dropdown">

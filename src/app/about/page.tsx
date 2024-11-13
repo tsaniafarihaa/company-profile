@@ -14,7 +14,7 @@ export default function AboutPage() {
             We started as a small startup with a big vision: to revolutionize the way people interact with technology.
           </p>
           <p className="text-lg">
-            Over the years, we've grown from a team of 5 to over 200 employees, with offices in major tech hubs around the world. 
+            Over the years, we&#39;ve grown from a team of 5 to over 200 employees, with offices in major tech hubs around the world. 
             Our commitment to excellence and user-centric design has led us to develop award-winning products used by millions.
           </p>
         </section>
@@ -45,7 +45,7 @@ export default function AboutPage() {
           <h2 className="text-3xl font-semibold mb-6 text-blue-400">Our Culture</h2>
           <p className="text-lg mb-4">
             At our core, we believe in fostering a culture of innovation, collaboration, and continuous learning. 
-            We encourage our team members to think outside the box, take risks, and push the boundaries of what's possible.
+            We encourage our team members to think outside the box, take risks, and push the boundaries of what&#39;s possible.
           </p>
           <p className="text-lg mb-4">
             Our values include:

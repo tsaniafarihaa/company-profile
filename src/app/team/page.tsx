@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 type TeamMember = {
     name: {
@@ -63,9 +64,11 @@ export default function TeamSection() {
                         className="relative overflow-hidden rounded-lg bg-gray-800"
                         whileHover={{ scale: 1.05 }}
                     >
-                        <img
+                        <Image
                             src={member.picture.large}
                             alt="Team Member"
+                            width={ 80}
+                            height={80}
                             className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
                         />
                         

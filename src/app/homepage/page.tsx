@@ -2,8 +2,8 @@
 import { BriefcaseIcon } from "@heroicons/react/outline";
 import Image from 'next/image';
 import Link from "next/link";
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useEffect, useRef, useState } from "react";
+import { motion } from 'framer-motion';
+import { useEffect, useState } from "react";
 
 type TeamMember = {
     picture: {
@@ -11,14 +11,8 @@ type TeamMember = {
     };
 };
 
-
-
-
 export default function HomePage() {
     const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
-    const ref = useRef(null);
-    const { scrollYProgress } = useScroll({ target: ref });
-    const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
 
     // Fetch team members from RandomUser API
     useEffect(() => {
@@ -35,7 +29,7 @@ export default function HomePage() {
     }, []);
 
     return (
-        <div ref={ref}>
+        <div>
             {/* Hero Section */}
             <div className="min-h-screen flex">
                 <div
@@ -107,35 +101,30 @@ export default function HomePage() {
                 <div className="container mx-auto px-4 relative z-10">
                     <h2 className="text-center text-4xl font-bold text-white mb-10">Our Services</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
-                        {/* Service Card 1 */}
                         <div className="card bg-white bg-opacity-30 shadow-lg rounded-lg p-6 hover:bg-[#2FA4F9] transition-colors duration-300">
                             <h3 className="text-2xl font-semibold text-white mb-4">Digital Design</h3>
                             <p className="text-white">
                                 We offer creative and unique design solutions for branding, marketing, and more.
                             </p>
                         </div>
-                        {/* Service Card 2 */}
                         <div className="card bg-white bg-opacity-30 shadow-lg rounded-lg p-6 hover:bg-[#2FA4F9] transition-colors duration-300">
                             <h3 className="text-2xl font-semibold text-white mb-4">Digital Branding</h3>
                             <p className="text-white">
-                                Enhance your brand's digital presence through strategic branding and digital marketing.
+                                Enhance your brand&#39;s digital presence through strategic branding and digital marketing.
                             </p>
                         </div>
-                        {/* Service Card 3 */}
                         <div className="card bg-white bg-opacity-30 shadow-lg rounded-lg p-6 hover:bg-[#2FA4F9] transition-colors duration-300">
                             <h3 className="text-2xl font-semibold text-white mb-4">Merchandise Production</h3>
                             <p className="text-white">
                                 High-quality merchandise for marketing or as part of your brand identity.
                             </p>
                         </div>
-                        {/* Service Card 4 */}
                         <div className="card bg-white bg-opacity-30 shadow-lg rounded-lg p-6 hover:bg-[#2FA4F9] transition-colors duration-300">
                             <h3 className="text-2xl font-semibold text-white mb-4">Production House</h3>
                             <p className="text-white">
                                 We handle all aspects of video production from concept to final cut.
                             </p>
                         </div>
-                        {/* Service Card 5 */}
                         <div className="card bg-white bg-opacity-30 shadow-lg rounded-lg p-6 hover:bg-[#2FA4F9] transition-colors duration-300">
                             <h3 className="text-2xl font-semibold text-white mb-4">Event Organizer</h3>
                             <p className="text-white">
@@ -148,17 +137,15 @@ export default function HomePage() {
 
             {/* Team Section */}
             <div className="flex flex-col lg:flex-row items-center bg-black text-white py-16 lg:px-24">
-                {/* Left Side (Text Section) */}
                 <div className="text-center lg:text-left lg:w-1/2 px-6 mb-6 lg:mb-0">
-            <h1 className="text-5xl font-bold mb-4">With a talented <span>
-            <Link href="/team"
-                         className="mt-4 inline-block bg-[#2FA4F9] text-white font-semibold py-2 px-4 rounded-lg hover:bg-[#0E80C2] transition-colors duration-300">
-                        Team
-              </Link>
-            </span></h1>
+                    <h1 className="text-5xl font-bold mb-4">With a talented <span>
+                        <Link href="/team"
+                             className="mt-4 inline-block bg-[#2FA4F9] text-white font-semibold py-2 px-4 rounded-lg hover:bg-[#0E80C2] transition-colors duration-300">
+                            Team
+                        </Link>
+                    </span></h1>
                 </div>
 
-                {/* Team Members Grid */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 w-full lg:w-1/2 px-4 lg:px-0">
                     {teamMembers.map((member, index) => (
                         <div key={index} className="w-full h-32 overflow-hidden rounded-lg">
@@ -166,13 +153,15 @@ export default function HomePage() {
                                 src={member.picture.large}
                                 alt="Team Member"
                                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                                width={150}
+                                height={150}
                             />
                         </div>
                     ))}
                 </div>
-        </div>
-        
- {/* Testimonials Section */}
+            </div>
+
+            {/* Testimonials Section */}
             <div className="bg-black py-16 px-6 lg:px-24 text-white">
                 <h2 className="text-center text-4xl font-bold mb-10">What Our Clients Say</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -182,7 +171,7 @@ export default function HomePage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                     >
-                        <p className="text-lg italic">"FUGO Creative exceeded our expectations. Their attention to detail and creativity are top-notch!"</p>
+                        <p className="text-lg italic">&quot;FUGO Creative exceeded our expectations. Their attention to detail and creativity are top-notch!&quot;</p>
                         <p className="mt-4 text-right font-semibold">- John Doe, CEO of CompanyX</p>
                     </motion.div>
                     <motion.div
@@ -191,7 +180,7 @@ export default function HomePage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        <p className="text-lg italic">"An amazing team of professionals who truly care about our success. Highly recommended!"</p>
+                        <p className="text-lg italic">&quot;An amazing team of professionals who truly care about our success. Highly recommended!&quot;</p>
                         <p className="mt-4 text-right font-semibold">- Sarah Lee, Marketing Head</p>
                     </motion.div>
                     <motion.div
@@ -200,12 +189,11 @@ export default function HomePage() {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
                     >
-                        <p className="text-lg italic">"Their team is skilled, and their support is exceptional. We're thrilled with the results."</p>
+                        <p className="text-lg italic">&quot;Their team is skilled, and their support is exceptional. We&#39;re thrilled with the results.&quot;</p>
                         <p className="mt-4 text-right font-semibold">- Emily Clark, Project Manager</p>
                     </motion.div>
                 </div>
             </div>
-
         </div>
     );
 }
