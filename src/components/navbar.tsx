@@ -1,126 +1,143 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 export default function Navbar() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navLinks = [
+    {
+      title: "Company",
+      isDropdown: true,
+      dropdownItems: [
+        { title: "About", href: "/about" },
+        { title: "Meet the Team", href: "/team" },
+        { title: "Careers", href: "/careers" },
+      ],
+    },
+    { title: "Portfolio", href: "/portfolio" },
+    { title: "Service", href: "/service" },
+    { title: "Client", href: "/client" },
+    { title: "Contact", href: "/contact" },
+  ];
 
   return (
-    <div className="navbar bg-black  opacity-60 fixed top-0 left-0 w-full z-50 p-4">
-      {/* Mobile Layout */}
-      <div className="navbar-start lg:hidden">
-        <div className="dropdown">
-          <button
-            tabIndex={0}
-            role="button"
-            onClick={() => setDropdownOpen(!isDropdownOpen)}
-            className="btn btn-ghost"
-            aria-label="Toggle navigation menu"
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        isScrolled ? "bg-black/90 backdrop-blur-sm shadow-lg" : "bg-black/60"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 sm:h-20">
+          {/* Logo - Now on the left for both mobile and desktop */}
+          <a
+            href="/homepage"
+            className={`font-bold text-white transition-all ${
+              isScrolled ? "text-lg sm:text-xl" : "text-xl sm:text-2xl"
+            }`}
           >
-            <GiHamburgerMenu className="h-6 w-6 text-white" />
-          </button>
-          {isDropdownOpen && (
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-white rounded-box z-10 mt-3 w-52 p-2 shadow"
-              onBlur={() => setDropdownOpen(false)}
+            FUGO CREATIVE
+          </a>
+
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center space-x-8">
+            {navLinks.map((link, index) => (
+              <div key={index} className="relative group">
+                {link.isDropdown ? (
+                  <div className="relative">
+                    <button className="text-white font-semibold hover:text-[#2FA4F9] transition-colors py-2">
+                      {link.title}
+                    </button>
+                    <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                      <div className="bg-white rounded-lg shadow-xl py-2 min-w-[160px]">
+                        {link.dropdownItems.map((item, idx) => (
+                          <a
+                            key={idx}
+                            href={item.href}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#2FA4F9] transition-colors"
+                          >
+                            {item.title}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <a
+                    href={link.href}
+                    className="text-white font-semibold hover:text-[#2FA4F9] transition-colors"
+                  >
+                    {link.title}
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Mobile Menu Button - Now on the right */}
+          <div className="lg:hidden">
+            <button
+              onClick={() => setDropdownOpen(!isDropdownOpen)}
+              className="p-2 rounded-md hover:bg-white/10 transition-colors"
+              aria-label="Toggle navigation menu"
             >
-              <li>
-                <a className="text-black hover:text-[#2FA4F9] cursor-pointer">
-                  Company
-                </a>
-                <ul className="p-2">
-                  <li>
-                    <a className="text-black hover:text-[#2FA4F9]">About</a>
-                  </li>
-                  <li>
-                    <a className="text-black hover:text-[#2FA4F9]">
-                      Meet the Team
-                    </a>
-                  </li>
-                  <li>
-                    <a className="text-black hover:text-[#2FA4F9]">Careers</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a className="text-black hover:text-[#2FA4F9]">Portfolio</a>
-              </li>
-              <li>
-                <a className="text-black hover:text-[#2FA4F9]">Service</a>
-              </li>
-              <li>
-                <a className="text-black hover:text-[#2FA4F9]">Client</a>
-              </li>
-              <li>
-                <a className="text-black hover:text-[#2FA4F9]">Contact</a>
-              </li>
-            </ul>
-          )}
+              <GiHamburgerMenu className="h-6 w-6 text-white" />
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation Dropdown */}
+        <div
+          className={`lg:hidden overflow-hidden transition-all duration-300 ${
+            isDropdownOpen ? "max-h-[400px]" : "max-h-0"
+          }`}
+        >
+          <div className="bg-white rounded-lg shadow-xl mt-2 mb-4">
+            {navLinks.map((link, index) => (
+              <div key={index}>
+                {link.isDropdown ? (
+                  <div className="px-4 py-2">
+                    <div className="font-semibold text-gray-800 mb-2">
+                      {link.title}
+                    </div>
+                    <div className="pl-4 space-y-2">
+                      {link.dropdownItems.map((item, idx) => (
+                        <a
+                          key={idx}
+                          href={item.href}
+                          className="block text-gray-600 hover:text-[#2FA4F9] transition-colors"
+                          onClick={() => setDropdownOpen(false)}
+                        >
+                          {item.title}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <a
+                    href={link.href}
+                    className="block px-4 py-2 text-gray-800 hover:text-[#2FA4F9] transition-colors"
+                    onClick={() => setDropdownOpen(false)}
+                  >
+                    {link.title}
+                  </a>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-
-      {/* Mobile Branding */}
-      <div className="navbar-end lg:hidden">
-        <a className="text-white font-bold text-[19px] mr-6" href="/homepage">
-          FUGO CREATIVE
-        </a>
-      </div>
-
-      {/* Desktop Layout */}
-      <div className="navbar-start hidden lg:flex">
-        <a className="text-2xl font-bold text-white" href="/homepage">
-          FUGO CREATIVE
-        </a>
-      </div>
-      <div className="navbar-end hidden lg:flex lg:justify-end lg:pr-10">
-        <ul className="menu menu-horizontal space-x-6">
-          <li>
-            <details>
-              <summary className="text-white font-semibold text-lg hover:text-[#2FA4F9] cursor-pointer">
-                Company
-              </summary>
-              <ul className="p-2 bg-white shadow-md rounded-md">
-                <li>
-                  <a className="text-black font-medium hover:text-[#2FA4F9]">
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a className="text-black font-medium hover:text-[#2FA4F9]">
-                    Meet the Team
-                  </a>
-                </li>
-                <li>
-                  <a className="text-black font-medium hover:text-[#2FA4F9]">
-                    Careers
-                  </a>
-                </li>
-              </ul>
-            </details>
-          </li>
-          <li>
-            <a className="text-white font-semibold text-lg hover:text-[#2FA4F9]">
-              Portfolio
-            </a>
-          </li>
-          <li>
-            <a className="text-white font-semibold text-lg hover:text-[#2FA4F9]">
-              Service
-            </a>
-          </li>
-          <li>
-            <a className="text-white font-semibold text-lg hover:text-[#2FA4F9]">
-              Client
-            </a>
-          </li>
-          <li>
-            <a className="text-white font-semibold text-lg hover:text-[#2FA4F9]">
-              Contact
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
+    </nav>
   );
 }
