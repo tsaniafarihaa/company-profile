@@ -1,91 +1,183 @@
-"use client";
-import { useEffect, useState, useRef } from "react";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+'use client';
+
+import { useEffect, useState, useRef, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { IPort } from '../../types/portfolio';
 import { getPort } from '@/libs/portfolio';
 
+const categories = [
+  "All",
+  "Digital Design",
+  "Digital Branding",
+  "Merchandise Production",
+  "Production House",
+  "Event Organizer"
+];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const cardVariants = {
+  hidden: { 
+    opacity: 0,
+    y: 20
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut"
+    }
+  }
+};
+
 export default function PortfolioPage() {
   const [portfolioItems, setPortfolioItems] = useState<IPort[]>([]);
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [isLoading, setIsLoading] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+
 
   useEffect(() => {
     const fetchPortfolio = async () => {
       try {
+        setIsLoading(true);
         const data = await getPort();
         setPortfolioItems(data);
       } catch (error) {
         console.error("Failed to fetch portfolio:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchPortfolio();
   }, []);
 
+  const filteredItems = useMemo(() => {
+    return selectedCategory === "All"
+      ? portfolioItems
+      : portfolioItems.filter(item => item.fields.service === selectedCategory);
+  }, [portfolioItems, selectedCategory]);
+
   return (
-    <div ref={ref} className="px-6 md:px-12 lg:px-20 min-h-screen bg-gray-50">
-      <h1 className="text-center text-4xl font-bold text-gray-800 my-8">Our Portfolio</h1>
-      <p className="text-center text-lg text-gray-600 mb-10">
-        Explore our creative projects and solutions crafted with passion and precision.
-      </p>
-      <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {portfolioItems.map((item, index) => (
-          <ParallaxCard
-            key={item.fields.judul + index}
-            imageUrl={`https:${item.fields.picture.fields.file.url}`}
-            title={item.fields.judul}
-            description={item.fields.desc}
-            service={item.fields.service}
-            index={index}
-            scrollYProgress={scrollYProgress}
-          />
-        ))}
+    <div className="min-h-screen bg-black text-white">
+      {/* Hero Section */}
+      <div className="relative h-52 bg-[#2FA4F9]/10 border-b border-[#2FA4F9]/20">
+        <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-5" />
+        <div className="relative container mx-auto px-4 h-full flex flex-col justify-center items-center">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl font-bold text-center mb-4 text-[#2FA4F9]"
+          >
+            Our Portfolio
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-base text-center max-w-2xl text-gray-300"
+          >
+            Explore our creative works and innovative solutions
+          </motion.p>
+        </div>
+      </div>
+
+      {/* Filter Section */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300
+                ${selectedCategory === category
+                  ? 'bg-[#2FA4F9] text-white shadow-lg scale-105'
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                } whitespace-nowrap`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+
+        {/* Portfolio Grid */}
+        <motion.div
+          ref={containerRef}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 max-w-7xl mx-auto"
+        >
+          <AnimatePresence mode="wait">
+            {isLoading ? (
+              [...Array(10)].map((_, i) => (
+                <div
+                  key={`skeleton-${i}`}
+                  className="w-full aspect-[3/4] bg-gray-800 rounded-lg animate-pulse"
+                />
+              ))
+            ) : (
+              filteredItems.map((item) => (
+                <PortfolioCard
+                  key={item.fields.judul}
+                  item={item}
+                />
+              ))
+            )}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </div>
   );
 }
 
-// Component ParallaxCard for each portfolio item
-interface ParallaxCardProps {
-  imageUrl: string;
-  title: string;
-  description: string;
-  service: string;
-  index: number;
-  scrollYProgress: MotionValue<number>; // Using MotionValue type for scrollYProgress
+interface PortfolioCardProps {
+  item: IPort;
 }
 
-function ParallaxCard({ imageUrl, title, description, service, index, scrollYProgress }: ParallaxCardProps) {
-  // Parallax effect for each card based on scroll position
-  const translateY = useTransform(scrollYProgress, [0, 1], ["0%", `${index * 15}%`]);
+function PortfolioCard({ item }: PortfolioCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
 
   return (
     <motion.div
-      style={{ translateY }}
-      className="bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105"
+      ref={cardRef}
+      variants={cardVariants}
+      className="w-full aspect-[3/4] group bg-gray-900 rounded-lg overflow-hidden 
+        hover:shadow-[0_0_15px_rgba(47,164,249,0.15)] transition-all duration-300"
     >
-      <figure className="relative w-full h-52">
+      {/* Image Container */}
+      <div className="relative w-full h-1/2 overflow-hidden">
         <Image
-          src={imageUrl}
-          alt={title}
-          layout="fill"
-          objectFit="cover"
-          className="w-full h-full object-cover"
+          src={`https:${item.fields.picture.fields.file.url}`}
+          alt={item.fields.judul}
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-110"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-60"></div>
-      </figure>
-      <div className="p-6">
-        <h2 className="text-2xl font-semibold text-gray-800">{title}</h2>
-        <p className="text-gray-600 mt-3">
-          {description.length > 100 ? `${description.slice(0, 100)}...` : description}
-        </p>
-        <div className="mt-4 flex justify-between items-center">
-          <span className="text-sm font-medium bg-blue-100 text-blue-600 px-3 py-1 rounded-full">
-            {service}
-          </span>
-          <button className="text-blue-600 hover:text-blue-800 transition-colors duration-300 font-semibold">
-            Learn More
-          </button>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900/80" />
+      </div>
+      
+      {/* Content Container */}
+      <div className="relative h-1/2 p-3 flex flex-col">
+        <span className="inline-block px-2 py-0.5 mb-2 text-xs font-medium text-white bg-[#2FA4F9] 
+          rounded-full self-start"
+        >
+          {item.fields.service}
+        </span>
+        <h3 className="text-sm font-bold text-white mb-2">{item.fields.judul}</h3>
+        <div className="text-gray-400 text-xs overflow-y-auto custom-scrollbar">
+          {item.fields.desc}
         </div>
       </div>
     </motion.div>
