@@ -196,39 +196,41 @@ export default function HomePage() {
                 </div>
             </div>
 
-            {/* Testimonials Section */}
-            <div className="bg-black py-16 px-6 lg:px-24 text-white">
-                <h2 className="text-center text-4xl font-bold mb-10">What Our Clients Say</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <motion.div
-                        className="bg-gray-800 p-6 rounded-lg shadow-lg"
-                        initial={{ opacity: 0, y: 50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                    >
-                        <p className="text-lg italic">&quot;FUGO Creative exceeded our expectations. Their attention to detail and creativity are top-notch!&quot;</p>
-                        <p className="mt-4 text-right font-semibold">- John Doe, CEO of CompanyX</p>
-                    </motion.div>
-                    <motion.div
-                        className="bg-gray-800 p-6 rounded-lg shadow-lg"
-                        initial={{ opacity: 0, y: 50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                    >
-                        <p className="text-lg italic">&quot;An amazing team of professionals who truly care about our success. Highly recommended!&quot;</p>
-                        <p className="mt-4 text-right font-semibold">- Sarah Lee, Marketing Head</p>
-                    </motion.div>
-                    <motion.div
-                        className="bg-gray-800 p-6 rounded-lg shadow-lg"
-                        initial={{ opacity: 0, y: 50 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                    >
-                        <p className="text-lg italic">&quot;Their team is skilled, and their support is exceptional. We&#39;re thrilled with the results.&quot;</p>
-                        <p className="mt-4 text-right font-semibold">- Emily Clark, Project Manager</p>
-                    </motion.div>
-                </div>
+           {/* Testimonials Section */}
+<section className="bg-black py-16 px-6 lg:px-24 text-white" aria-label="Client Testimonials">
+  <h2 className="text-center text-4xl font-bold mb-10">What Our Clients Say</h2>
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <motion.div
+      className="bg-gray-800 p-6 rounded-lg shadow-lg"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      <p className="text-lg italic">&quot;FUGO Creative exceeded our expectations. Their attention to detail is top-notch!&quot;</p>
+      <p className="mt-4 text-right font-semibold">- John Doe, CEO of CompanyX</p>
+    </motion.div>
+    <motion.div
+      className="bg-gray-800 p-6 rounded-lg shadow-lg"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+    >
+      <p className="text-lg italic">&quot;An amazing team of professionals who truly care about our success.&quot;</p>
+      <p className="mt-4 text-right font-semibold">- Sarah Lee, Marketing Head</p>
+    </motion.div>
+    <motion.div
+      className="bg-gray-800 p-6 rounded-lg shadow-lg"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.4 }}
+    >
+      <p className="text-lg italic">&quot;Their team is skilled, and their support is exceptional.&quot;</p>
+      <p className="mt-4 text-right font-semibold">- Emily Clark, Project Manager</p>
+    </motion.div>
+  </div>
+</section>
+
             </div>
-        </div>
+        
     );
 }

@@ -59,7 +59,7 @@ export default function TeamSection() {
             </div>
 
             {/* Right Side: Image Grid with Info Overlay */}
-            <div className="lg:w-2/3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 h-[70vh]">
+            <div className="lg:w-2/3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 h-[70vh] mt-10">
                 {teamMembers.slice(0, 12).map((member, index) => (
                     <motion.div
                         key={index}
