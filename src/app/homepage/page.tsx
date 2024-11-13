@@ -162,7 +162,7 @@ export default function HomePage() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 w-full lg:w-1/2 px-4 lg:px-0">
                     {teamMembers.map((member, index) => (
                         <div key={index} className="w-full h-32 overflow-hidden rounded-lg">
-                            <img
+                            <Image
                                 src={member.picture.large}
                                 alt="Team Member"
                                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"

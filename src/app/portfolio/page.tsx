@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 const Portfolio = () => {
@@ -37,7 +38,7 @@ const Portfolio = () => {
               {item.type === "video" ? (
                 <video src={item.src} controls className="w-full h-full object-cover rounded-lg" />
               ) : (
-                <img src={item.src} alt={item.title} className="w-full h-full object-cover rounded-lg" />
+                <Image src={item.src} alt={item.title} className="w-full h-full object-cover rounded-lg" />
               )}
             </div>
             <h3 className="mt-4 text-xl font-semibold text-center text-gray-800">{item.title}</h3>
