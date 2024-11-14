@@ -91,12 +91,18 @@ const TESTIMONIALS = [
   },
 ];
 
-// Optimized Components
+// Optimized Hero Component
 const HeroHalf = memo(({ title, image }: { title: string; image: string }) => (
-  <div
-    className="w-full md:w-1/2 h-96 md:h-screen relative bg-cover bg-center group"
-    style={{ backgroundImage: `url(${image})` }}
-  >
+  <div className="w-full md:w-1/2 h-96 md:h-screen relative group">
+    <Image
+      src={image}
+      alt={`WE ARE ${title}`}
+      fill
+      priority
+      className="object-cover"
+      quality={80}
+      sizes="(max-width: 768px) 100vw, 50vw"
+    />
     <div className="absolute inset-0 bg-black bg-opacity-50 group-hover:bg-opacity-70 transition-all duration-300" />
     <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
       <h2 className="text-white text-lg font-bold mb-2">WE ARE</h2>
@@ -166,7 +172,7 @@ export default function HomePage() {
     const controller = new AbortController();
 
     try {
-      const response = await fetch("https://randomuser.me/api/?results=12", {
+      const response = await fetch("https://randomuser.me/api/?results=8", {
         signal: controller.signal,
         next: { revalidate: 3600 }, // Cache for 1 hour
       });
@@ -192,8 +198,8 @@ export default function HomePage() {
     <main className="overflow-hidden">
       {/* Hero Section */}
       <section className="min-h-screen flex flex-col md:flex-row">
-        <HeroHalf title="FUGO" image="/img/hero-1.jpeg" />
-        <HeroHalf title="CREATIVE" image="/img/hero-2.jpeg" />
+        <HeroHalf title="FUGO" image="/img/hero-1.webp" />
+        <HeroHalf title="CREATIVE" image="/img/hero-2.webp" />
       </section>
 
       {/* About Section */}
@@ -233,7 +239,7 @@ export default function HomePage() {
           className="lg:w-1/2 h-full flex items-center justify-center"
         >
           <Image
-            src="/img/fugo2.png"
+            src="/img/fugo2.webp"
             alt="About Us"
             width={500}
             height={500}
@@ -289,14 +295,16 @@ export default function HomePage() {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 w-full lg:w-1/2">
           {teamMembers.map((member, index) => (
-            <div key={index} className="w-full h-32 overflow-hidden rounded-lg">
+            <div
+              key={index}
+              className="relative aspect-square rounded-lg overflow-hidden"
+            >
               <Image
                 src={member.picture.large}
                 alt={`Team Member ${index + 1}`}
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
-                width={150}
-                height={150}
-                loading="lazy"
+                fill
+                className="object-cover grayscale hover:grayscale-0 transition-all duration-300"
+                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 quality={75}
               />
             </div>
@@ -305,10 +313,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-      <section
-        className="bg-black py-16 px-6 lg:px-24 text-white"
-        aria-label="Client Testimonials"
-      >
+      <section className="bg-black py-16 px-6 lg:px-24 text-white">
         <h2 className="text-center text-4xl font-bold mb-10">
           What Our Clients Say
         </h2>
