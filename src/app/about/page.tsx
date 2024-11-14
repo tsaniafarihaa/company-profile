@@ -78,25 +78,77 @@ export default function AboutPage() {
             </div>
           )}
         </div>
-
         {/* Content Sections */}
         {activeTab === "history" && (
           <section className="animate-fade-in">
-            <h2 className="text-2xl sm:text-3xl font-semibold mb-4 sm:mb-6 text-blue-400">
-              Our History
-            </h2>
-            <p className="text-base sm:text-lg mb-4">
-              Founded in 2010, our company has been at the forefront of
-              innovation in the tech industry. We started as a small startup
-              with a big vision: to revolutionize the way people interact with
-              technology.
-            </p>
-            <p className="text-base sm:text-lg">
-              Over the years, we&apos;ve grown from a team of 5 to over 200
-              employees, with offices in major tech hubs around the world. Our
-              commitment to excellence and user-centric design has led us to
-              develop award-winning products used by millions.
-            </p>
+            <div className="flex flex-col lg:flex-row gap-8">
+              {/* Text Content */}
+              <div className="lg:w-1/2">
+                <h2 className="text-2xl sm:text-3xl font-semibold mb-4 sm:mb-6 text-blue-400">
+                  Our History
+                </h2>
+                <p className="text-base sm:text-lg mb-4">
+                  Founded in 2010, our company has been at the forefront of
+                  innovation in the tech industry. We started as a small startup
+                  with a big vision: to revolutionize the way people interact
+                  with technology.
+                </p>
+                <p className="text-base sm:text-lg">
+                  Over the years, we&apos;ve grown from a team of 5 to over 200
+                  employees, with offices in major tech hubs around the world.
+                  Our commitment to excellence and user-centric design has led
+                  us to develop award-winning products used by millions.
+                </p>
+              </div>
+
+              {/* Image Grid */}
+              <div className="lg:w-1/2">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <Image
+                    src="https://placehold.co/400x300/black/white"
+                    alt="Singapore Office"
+                    width={400}
+                    height={300}
+                    className="w-full h-40 object-cover rounded-lg"
+                  />
+                  <Image
+                    src="https://placehold.co/400x300/black/white"
+                    alt="Sydney Office"
+                    width={400}
+                    height={300}
+                    className="w-full h-40 object-cover rounded-lg"
+                  />
+                  <Image
+                    src="https://placehold.co/400x300/black/white"
+                    alt="Tokyo Office"
+                    width={400}
+                    height={300}
+                    className="w-full h-40 object-cover rounded-lg"
+                  />
+                  <Image
+                    src="https://placehold.co/400x300/black/white"
+                    alt="Dubai Office"
+                    width={400}
+                    height={300}
+                    className="w-full h-40 object-cover rounded-lg"
+                  />
+                  <Image
+                    src="https://placehold.co/400x300/black/white"
+                    alt="Bangkok Office"
+                    width={400}
+                    height={300}
+                    className="w-full h-40 object-cover rounded-lg"
+                  />
+                  <Image
+                    src="https://placehold.co/400x300/black/white"
+                    alt="Cambodia Office"
+                    width={400}
+                    height={300}
+                    className="w-full h-40 object-cover rounded-lg"
+                  />
+                </div>
+              </div>
+            </div>
           </section>
         )}
 
